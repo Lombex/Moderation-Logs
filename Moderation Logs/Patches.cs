@@ -33,8 +33,6 @@ namespace MainSpace
 
         private static Dictionary<int, bool> ModerationBlockState = new Dictionary<int, bool>();
         private static Dictionary<int, bool> ModerationMuteState = new Dictionary<int, bool>();
-        public static Dictionary<string, string> BlockList = new Dictionary<string, string>();
-        public static Dictionary<string, string> MuteList = new Dictionary<string, string>();
         private static IEnumerator ModerationStates(int ActorID, bool BlockState, bool MuteState)
         {
             while (true)
@@ -45,24 +43,18 @@ namespace MainSpace
                     if (BlockState && !ModerationBlockState[ActorID])
                     {
                         Console.WriteLine($"{_GetPlayer.field_Public_Player_0.field_Private_APIUser_0.displayName} has blocked u");
-                        if (!BlockList.ContainsKey(_GetPlayer.field_Public_Player_0.field_Private_APIUser_0.id)) 
-                            BlockList.Add(_GetPlayer.field_Public_Player_0.field_Private_APIUser_0.displayName, _GetPlayer.field_Public_Player_0.field_Private_APIUser_0.id);
                     }
                     if (!BlockState && ModerationBlockState[ActorID])
                     {
                         Console.WriteLine($"{_GetPlayer.field_Public_Player_0.field_Private_APIUser_0.displayName} has unblocked u");
-                        if (BlockList.ContainsKey(_GetPlayer.field_Public_Player_0.field_Private_APIUser_0.id)) BlockList.Remove(_GetPlayer.field_Public_Player_0.field_Private_APIUser_0.id);
                     }
                     if (MuteState && !ModerationMuteState[ActorID])
                     {
                         Console.WriteLine($"{_GetPlayer.field_Public_Player_0.field_Private_APIUser_0.displayName} has muted u");
-                        if (!MuteList.ContainsKey(_GetPlayer.field_Public_Player_0.field_Private_APIUser_0.id))
-                            MuteList.Add(_GetPlayer.field_Public_Player_0.field_Private_APIUser_0.displayName, _GetPlayer.field_Public_Player_0.field_Private_APIUser_0.id);
                     }
                     if (!MuteState && ModerationMuteState[ActorID])
                     {
                         Console.WriteLine($"{_GetPlayer.field_Public_Player_0.field_Private_APIUser_0.displayName} has unmuted u");
-                        if (MuteList.ContainsKey(_GetPlayer.field_Public_Player_0.field_Private_APIUser_0.id)) MuteList.Remove(_GetPlayer.field_Public_Player_0.field_Private_APIUser_0.id);
                     }
                     ModerationBlockState[ActorID] = BlockState;
                     ModerationMuteState[ActorID] = MuteState;
@@ -87,13 +79,9 @@ namespace MainSpace
                     {
                         case GetModerationState.Block:
                             Console.WriteLine($"{_GetPlayer.field_Public_Player_0.field_Private_APIUser_0.displayName} Blocked Before!");
-                            if (!BlockList.ContainsKey(_GetPlayer.field_Public_Player_0.field_Private_APIUser_0.id))
-                                BlockList.Add(_GetPlayer.field_Public_Player_0.field_Private_APIUser_0.displayName, _GetPlayer.field_Public_Player_0.field_Private_APIUser_0.id);
                             yield break;
                         case GetModerationState.Mute:
                             Console.WriteLine($"{_GetPlayer.field_Public_Player_0.field_Private_APIUser_0.displayName} Muted Before!");
-                            if (!MuteList.ContainsKey(_GetPlayer.field_Public_Player_0.field_Private_APIUser_0.id))
-                                MuteList.Add(_GetPlayer.field_Public_Player_0.field_Private_APIUser_0.displayName, _GetPlayer.field_Public_Player_0.field_Private_APIUser_0.id);
                             yield break;
                     }
                 }
@@ -104,7 +92,7 @@ namespace MainSpace
         {
             if (__0.Code == 33)
             {
-                object DataRPC = Utils.Serialization.FromIL2CPPToManaged<object>(__0.Parameters);
+                object DataRPC = Serialization.FromIL2CPPToManaged<object>(__0.Parameters);
                 string ModerationData = JsonConvert.SerializeObject(DataRPC, Formatting.Indented);
                 JObject ParsedData = JObject.Parse(ModerationData);
                 if (ParsedData["245"].SelectToken("1") != null && ParsedData["245"].SelectToken("10") != null && ParsedData["245"].SelectToken("11") != null)
