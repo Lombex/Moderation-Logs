@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Photon.Realtime;
-using Photon.Pun;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 
@@ -13,12 +12,12 @@ namespace Utils
     public static class PhotonExtensions
     {
         private static readonly Dictionary<int, Player> ActorIDToPhotonPlayer = new Dictionary<int, Player>();
-        public static LoadBalancingClient LoadBalancingClient => PhotonNetwork.field_Public_Static_LoadBalancingClient_0;
+        public static LoadBalancingClient LoadBalancingClient => ObjectPublicAbstractSealedObInObStInHa1ObInDiUnique.field_Public_Static_LoadBalancingClient_0;
         public static int GetPhotonID(this Player player) => player.field_Private_Int32_0;
         public static List<Player> GetAllPhotonPlayers(this LoadBalancingClient Instance)
         {
             List<Player> Result = new List<Player>();
-            foreach (var x in Instance.prop_Player_0.prop_Room_0.field_Private_Dictionary_2_Int32_Player_0) Result.Add(x.Value);
+            foreach (var x in Instance.prop_Player_0.GetPhotonRoom().field_Private_Dictionary_2_Int32_Player_0) Result.Add(x.Value);
             return Result; 
         }
         public static void RefreshPhotonList()

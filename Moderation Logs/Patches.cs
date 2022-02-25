@@ -92,14 +92,14 @@ namespace MainSpace
         {
             if (__0.Code == 33)
             {
-                object DataRPC = Serialization.FromIL2CPPToManaged<object>(__0.Parameters);
+                object DataRPC = Serialization.FromIL2CPPToManaged<object>(__0.CustomData);
                 string ModerationData = JsonConvert.SerializeObject(DataRPC, Formatting.Indented);
                 JObject ParsedData = JObject.Parse(ModerationData);
-                if (ParsedData["245"].SelectToken("1") != null && ParsedData["245"].SelectToken("10") != null && ParsedData["245"].SelectToken("11") != null)
+                if (ParsedData["1"] != null && ParsedData["10"] != null && ParsedData["11"] != null)
                 {
-                    int ActorID = ParsedData["245"].SelectToken("1").ToObject<int>();
-                    bool BlockState = ParsedData["245"].SelectToken("10").ToObject<bool>();
-                    bool MuteState = ParsedData["245"].SelectToken("11").ToObject<bool>();
+                    int ActorID = ParsedData["1"].ToObject<int>();
+                    bool BlockState = ParsedData["10"].ToObject<bool>();
+                    bool MuteState = ParsedData["11"].ToObject<bool>();
                     if (!ModerationBlockState.ContainsKey(ActorID))
                     {
                         ModerationBlockState.Add(ActorID, BlockState);
