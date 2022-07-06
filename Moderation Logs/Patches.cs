@@ -117,3 +117,12 @@ namespace MainSpace
         }
     }
 }
+
+/*
+[19:47:10.731] [ERROR] Exception in Harmony patch of method void Photon.Realtime.LoadBalancingClient::OnEvent(ExitGames.Client.Photon.EventData param_1):
+UnhollowerBaseLib.Il2CppException: System.NullReferenceException: Object reference not set to an instance of an object.
+
+  at UnhollowerBaseLib.Il2CppException.RaiseExceptionIfNecessary (System.IntPtr returnedException) [0x00018] in <8eb030b38f51415daeb459bae49fe0fc>:0
+  at(wrapper dynamic-method) Photon.Realtime.LoadBalancingClient.DMD<Photon.Realtime.LoadBalancingClient::OnEvent>(Photon.Realtime.LoadBalancingClient, ExitGames.Client.Photon.EventData)
+  at(wrapper dynamic-method) MonoMod.Utils.DynamicMethodDefinition.DMD<Photon.Realtime.LoadBalancingClient::OnEvent> _il2cpp(intptr, intptr)
+*/
