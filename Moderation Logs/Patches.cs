@@ -22,13 +22,11 @@ namespace MainSpace
         }
         public static void OnEventPatching(HarmonyLib.Harmony Instance)
         {
-            try
-            {
-                Instance.Patch(typeof(Photon.Realtime.LoadBalancingClient).GetMethod(nameof(Photon.Realtime.LoadBalancingClient.OnEvent)), typeof(Patches).GetPatch(nameof(OnModerationEvent)));
-            } catch (Exception e)
-            {
-                MelonLogger.Msg("OnEvent patch failed:" + e.Message);
-            }
+            Instance.Patch(typeof(Photon.Realtime.LoadBalancingClient).GetMethod(nameof(Photon.Realtime.LoadBalancingClient.OnEvent)), typeof(Patches).GetPatch(nameof(OnModerationEvent)), finalizer: typeof(Patches).GetPatch(nameof(ExceptionHandler)));
+        }
+        private static Exception ExceptionHandler()
+        {
+            return null;
         }
 
         private static Dictionary<int, bool> ModerationBlockState = new Dictionary<int, bool>();
@@ -42,19 +40,19 @@ namespace MainSpace
                 {
                     if (BlockState && !ModerationBlockState[ActorID])
                     {
-                        Console.WriteLine($"{_GetPlayer.field_Public_Player_0.field_Private_APIUser_0.displayName} has blocked u");
+                        Console.WriteLine($"{_GetPlayer.field_Public_Player_0.field_Private_APIUser_0.displayName} [{_GetPlayer.field_Public_Player_0.field_Private_APIUser_0.id}] has blocked u");
                     }
                     if (!BlockState && ModerationBlockState[ActorID])
                     {
-                        Console.WriteLine($"{_GetPlayer.field_Public_Player_0.field_Private_APIUser_0.displayName} has unblocked u");
+                        Console.WriteLine($"{_GetPlayer.field_Public_Player_0.field_Private_APIUser_0.displayName} [{_GetPlayer.field_Public_Player_0.field_Private_APIUser_0.id}] has unblocked u");
                     }
                     if (MuteState && !ModerationMuteState[ActorID])
                     {
-                        Console.WriteLine($"{_GetPlayer.field_Public_Player_0.field_Private_APIUser_0.displayName} has muted u");
+                        Console.WriteLine($"{_GetPlayer.field_Public_Player_0.field_Private_APIUser_0.displayName} [{_GetPlayer.field_Public_Player_0.field_Private_APIUser_0.id}] has muted u");
                     }
                     if (!MuteState && ModerationMuteState[ActorID])
                     {
-                        Console.WriteLine($"{_GetPlayer.field_Public_Player_0.field_Private_APIUser_0.displayName} has unmuted u");
+                        Console.WriteLine($"{_GetPlayer.field_Public_Player_0.field_Private_APIUser_0.displayName} [{_GetPlayer.field_Public_Player_0.field_Private_APIUser_0.id}] has unmuted u");
                     }
                     ModerationBlockState[ActorID] = BlockState;
                     ModerationMuteState[ActorID] = MuteState;
@@ -78,10 +76,10 @@ namespace MainSpace
                     switch (Type)
                     {
                         case GetModerationState.Block:
-                            Console.WriteLine($"{_GetPlayer.field_Public_Player_0.field_Private_APIUser_0.displayName} Blocked Before!");
+                            Console.WriteLine($"{_GetPlayer.field_Public_Player_0.field_Private_APIUser_0.displayName} [{_GetPlayer.field_Public_Player_0.field_Private_APIUser_0.id}] Blocked u!");
                             yield break;
                         case GetModerationState.Mute:
-                            Console.WriteLine($"{_GetPlayer.field_Public_Player_0.field_Private_APIUser_0.displayName} Muted Before!");
+                            Console.WriteLine($"{_GetPlayer.field_Public_Player_0.field_Private_APIUser_0.displayName} [{_GetPlayer.field_Public_Player_0.field_Private_APIUser_0.id}] Muted u!");
                             yield break;
                     }
                 }
@@ -117,12 +115,3 @@ namespace MainSpace
         }
     }
 }
-
-/*
-[19:47:10.731] [ERROR] Exception in Harmony patch of method void Photon.Realtime.LoadBalancingClient::OnEvent(ExitGames.Client.Photon.EventData param_1):
-UnhollowerBaseLib.Il2CppException: System.NullReferenceException: Object reference not set to an instance of an object.
-
-  at UnhollowerBaseLib.Il2CppException.RaiseExceptionIfNecessary (System.IntPtr returnedException) [0x00018] in <8eb030b38f51415daeb459bae49fe0fc>:0
-  at(wrapper dynamic-method) Photon.Realtime.LoadBalancingClient.DMD<Photon.Realtime.LoadBalancingClient::OnEvent>(Photon.Realtime.LoadBalancingClient, ExitGames.Client.Photon.EventData)
-  at(wrapper dynamic-method) MonoMod.Utils.DynamicMethodDefinition.DMD<Photon.Realtime.LoadBalancingClient::OnEvent> _il2cpp(intptr, intptr)
-*/

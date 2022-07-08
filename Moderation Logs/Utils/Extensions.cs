@@ -7,6 +7,7 @@ using Photon.Realtime;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using Photon.Pun;
+using System.Runtime.Serialization;
 
 namespace Utils
 {
