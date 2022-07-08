@@ -40,19 +40,19 @@ namespace MainSpace
                 {
                     if (BlockState && !ModerationBlockState[ActorID])
                     {
-                        Console.WriteLine($"{_GetPlayer.field_Public_Player_0.field_Private_APIUser_0.displayName} [{_GetPlayer.field_Public_Player_0.field_Private_APIUser_0.id}] has blocked u");
+                        MelonLogger.Msg($"{_GetPlayer.field_Public_Player_0.field_Private_APIUser_0.displayName} [{_GetPlayer.field_Public_Player_0.field_Private_APIUser_0.id}] has blocked u");
                     }
                     if (!BlockState && ModerationBlockState[ActorID])
                     {
-                        Console.WriteLine($"{_GetPlayer.field_Public_Player_0.field_Private_APIUser_0.displayName} [{_GetPlayer.field_Public_Player_0.field_Private_APIUser_0.id}] has unblocked u");
+                        MelonLogger.Msg($"{_GetPlayer.field_Public_Player_0.field_Private_APIUser_0.displayName} [{_GetPlayer.field_Public_Player_0.field_Private_APIUser_0.id}] has unblocked u");
                     }
                     if (MuteState && !ModerationMuteState[ActorID])
                     {
-                        Console.WriteLine($"{_GetPlayer.field_Public_Player_0.field_Private_APIUser_0.displayName} [{_GetPlayer.field_Public_Player_0.field_Private_APIUser_0.id}] has muted u");
+                        MelonLogger.Msg($"{_GetPlayer.field_Public_Player_0.field_Private_APIUser_0.displayName} [{_GetPlayer.field_Public_Player_0.field_Private_APIUser_0.id}] has muted u");
                     }
                     if (!MuteState && ModerationMuteState[ActorID])
                     {
-                        Console.WriteLine($"{_GetPlayer.field_Public_Player_0.field_Private_APIUser_0.displayName} [{_GetPlayer.field_Public_Player_0.field_Private_APIUser_0.id}] has unmuted u");
+                        MelonLogger.Msg($"{_GetPlayer.field_Public_Player_0.field_Private_APIUser_0.displayName} [{_GetPlayer.field_Public_Player_0.field_Private_APIUser_0.id}] has unmuted u");
                     }
                     ModerationBlockState[ActorID] = BlockState;
                     ModerationMuteState[ActorID] = MuteState;
@@ -76,10 +76,10 @@ namespace MainSpace
                     switch (Type)
                     {
                         case GetModerationState.Block:
-                            Console.WriteLine($"{_GetPlayer.field_Public_Player_0.field_Private_APIUser_0.displayName} [{_GetPlayer.field_Public_Player_0.field_Private_APIUser_0.id}] Blocked u!");
+                            MelonLogger.Msg($"{_GetPlayer.field_Public_Player_0.field_Private_APIUser_0.displayName} [{_GetPlayer.field_Public_Player_0.field_Private_APIUser_0.id}] Blocked u!");
                             yield break;
                         case GetModerationState.Mute:
-                            Console.WriteLine($"{_GetPlayer.field_Public_Player_0.field_Private_APIUser_0.displayName} [{_GetPlayer.field_Public_Player_0.field_Private_APIUser_0.id}] Muted u!");
+                            MelonLogger.Msg($"{_GetPlayer.field_Public_Player_0.field_Private_APIUser_0.displayName} [{_GetPlayer.field_Public_Player_0.field_Private_APIUser_0.id}] Muted u!");
                             yield break;
                     }
                 }

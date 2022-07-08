@@ -37,7 +37,6 @@ namespace Utils
             }
         }
     }
-
     public static class Serialization
     {
         public static byte[] ToByteArray(Il2CppSystem.Object obj)
